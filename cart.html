@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palki Store - Cart</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+background:#f8f8f8;
+}
+
+/* top ribbon */
+.top-ribbon{
+background:#000;
+color:#fff;
+text-align:center;
+padding:8px;
+font-size:14px;
+}
+
+/* header */
+.header-wrapper{
+background:#fff;
+border-bottom:1px solid #ddd;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 40px;
+}
+
+.logo img{
+height:45px;
+}
+
+.nav-icons i{
+font-size:20px;
+margin-left:20px;
+cursor:pointer;
+}
+
+/* cart section */
+
+.cart-container{
+max-width:1000px;
+margin:40px auto;
+background:#fff;
+padding:20px;
+border-radius:8px;
+}
+
+.cart-item{
+display:flex;
+align-items:center;
+border-bottom:1px solid #eee;
+padding:15px 0;
+}
+
+.cart-item img{
+width:80px;
+margin-right:20px;
+}
+
+.cart-details{
+flex:1;
+}
+
+.cart-price{
+font-weight:bold;
+}
+
+.remove-btn{
+background:red;
+color:#fff;
+border:none;
+padding:6px 12px;
+cursor:pointer;
+}
+
+.cart-total{
+text-align:right;
+margin-top:20px;
+font-size:20px;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- TOP RIBBON -->
+<div class="top-ribbon">
+Free Shipping On Orders Over ₹999
+</div>
+
+<!-- HEADER -->
+<div class="header-wrapper">
+
+<header class="header">
+
+<div class="logo">
+<a href="index.html">
+<img src="images/logoc2.png" alt="Palki Store Logo">
+</a>
+</div>
+
+<div class="nav-icons">
+<i class="fa-solid fa-user"></i>
+<i class="fa-solid fa-heart"></i>
+<a href="cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+</div>
+
+</header>
+
+</div>
+
+
+<!-- CART SECTION -->
+
+<div class="cart-container">
+
+<h2>Your Cart</h2>
+
+<div id="cart-items"></div>
+
+<div class="cart-total">
+Total: ₹ <span id="cart-total">0</span>
+</div>
+
+</div>
+
+
+<script>
+
+// get cart from localStorage
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+let cartContainer = document.getElementById("cart-items");
+let totalPrice = 0;
+
+function displayCart(){
+
+cartContainer.innerHTML = "";
+
+cart.forEach((item,index)=>{
+
+totalPrice += item.price;
+
+cartContainer.innerHTML += `
+<div class="cart-item">
+
+<img src="${item.image}">
+
+<div class="cart-details">
+<h4>${item.name}</h4>
+<p class="cart-price">₹${item.price}</p>
+</div>
+
+<button class="remove-btn" onclick="removeItem(${index})">
+Remove
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById("cart-total").innerText = totalPrice;
+
+}
+
+function removeItem(index){
+
+cart.splice(index,1);
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+location.reload();
+
+}
+
+displayCart();
+
+</script>
+
+</body>
+</html>
